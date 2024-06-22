@@ -1,71 +1,73 @@
-# phantom README
+# ✨ Phantom ✨
 
-This is the README for your extension "phantom". After writing up a brief description, we recommend including the following sections.
+Phantom is a _smart_, _fast_, _minimal_ and _modern_ theme/extension.
 
-## Features
+## Why Phantom?
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### Why theme/extension?
+Phantom comes with a bunch of features, _is not only a regular theme for VSCode_. I like to have my VSCode decluttered of extension so I try to implement as much as I can here in this extension.
 
-For example if there is an image subfolder under your extension project workspace:
+### Features
+- **Markdown Flavoured**, you don't need to install any other extension for flavouring your markdown as Github has. _Phantom_ comes with it by default.
 
-\!\[feature X\]\(images/feature-x.png\)
+- **Custom Accents**, Having to choose one color is a bit boring, so I decided to give the possibility to change the whole accent color the theme dynamically on the configuration.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- **Minimal as possible**, even tho _Phantom_ comes with a bunch of features, it tries to be as minimal as possible to occupy less and charge faster than other extensions.
 
-## Requirements
+- **I am open to changes**, you can suggest a change and I can review it, who knows, maybe I like the idea and ends up implemented inside the theme/extension.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- **Smart**, Phantom can adapt, if you choose for example a custom accent that is too dark, phantom will automatically adapt the font color to be white, same with black if its too light.
+
+### Requirements
+_Phantom_ doesn't have external requirements, I try to maintain everything locally to offer a secure experience, all the code from the markdown flavour, to the customization is made by me _(with some help of google of course, who are we gona lie?)_.
+
+### I don't trust you neither Phantom
+That's a fair concern now a days with all the controversy related with VSCode extension and it's marketplace as the extensions are not sandboxed.
+
+**But, please, allow me to convince you.**
+
+_Phantom_, of course, as any other extension reads files from the system to realize features for the extension. **Have this in mind**.
+
+But the files that _Phantom_ reads are **ONLY** and **EXCLUSIVELY** used for the theme, I don't intent to do any malicious activity neither create the biggest botnet of all time.
+
+The things that _Phantom_ uses to read files are:
+- Workspace vscode function (read configuration from the settings.json, but only the phantom ones)
+- As well: `Uri.file(join(__dirname, '../', 'themes', fileName));` this is used to update the theme dynamically. If you want to check out yourself is under the `updateTheme.ts` file inside `theme` folder.
+
+_If you still don't trust me, you can review the code yourself, is Open for everyone to view it._
+
+Feel free to do an extension scan with some tool to verify it as well, and as well a scan with some Virus detection tool to check out.
+
+**Also, this is important due to the concerns about selling stuff to unknown enterprises/sources, _Phantom_, well, more _myself_ doesn't have the intent to sell this extension to any enterprise or individual, my idea is to keep the ownership and supervision of the extension.**
+
+
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
+Phantom has some simple settings you can tweak to "customize" your experience a little bit.
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+* `phantom.accentColor`: Changes the accent color of the components inside the theme.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+There are no known issues as for now.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+The release notes are under the `CHANGELOG.md` file, and if you have the theme installed, you can do the following:
 
-### 1.0.0
+1. `Ctrl + shift + P` to open the command palette.
+2. Search for phantom, there is a command which is: `Show Changelog`.
+3. Open it, you will see all the Changelog in a Webview inside VSCode.
 
-Initial release of ...
+## Contributions
+I usually work alone and I don't intent to work with some other people right now, if you are interested just follow the project and support it.
 
-### 1.0.1
+Maybe in the future my mind will change and I put some kind of team working into this extension/theme.
 
-Fixed issue #.
+## License
+The project will be kept as **Open Source**, but that doesn't mean you can do whatever you want with the code, so please, I can't control what all the people do, but be nice.
 
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Read the `LICENSE` file there is on the project to inform yourself first.
