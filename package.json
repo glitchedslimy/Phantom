@@ -2,7 +2,7 @@
   "name": "phantom-theme-official",
   "displayName": "Phantom",
   "description": "Official Phantom Theme for VSCode",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "Slimy",
   "engines": {
     "vscode": "^1.90.0"
