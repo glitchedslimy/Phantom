@@ -38,4 +38,4 @@ Nothing has been removed in this version.
 - Annoying blue color on the CHANGELOG titles webview
 
 ### Changed
-Nothing has been changed is this version.
+- Color tokenization, it was all white, now it has colors inside the theme.
