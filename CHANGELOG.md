@@ -5,8 +5,27 @@ All notable changes to the "phantom" extension will be documented in this file.
 Following the structure of [Keep a Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-
+### Added
 - Started the extension.
 - Started to make the theme with custom colors.
 - Started to do the Markdown Flavour (GFM).
 - Started to do the dynamic modifications in the configuration.
+
+### Removed
+Nothing removed in this version.
+
+### Changed
+Nothing changed in this version.
+
+## [0.1.0-alpha]
+
+### Added
+- Semantic Tokenization with colors, now the editor has colors to display things in the code.
+
+### Removed
+
+Nothing has been removed in this version.
+
+### Changed
+- Structure of functions and code due to a refactor to improve readability and performance.
+

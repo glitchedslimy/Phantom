@@ -2,38 +2,7 @@
   "name": "Phantom",
   "type": "dark",
   "semanticHighlighting": true,
-  "semanticTokenColors": {
-    "enumMember": {
-      "foreground": "#56b6c2"
-    },
-    "variable.constant": {
-      "foreground": "#d19a66"
-    },
-    "variable.defaultLibrary": {
-      "foreground": "#e5c07b"
-    },
-    "variable:dart": {
-      "foreground": "#d19a66"
-    },
-    "property:dart": {
-      "foreground": "#d19a66"
-    },
-    "annotation:dart": {
-      "foreground": "#d19a66"
-    },
-    "parameter.label:dart": {
-      "foreground": "#abb2bf"
-    },
-    "macro": {
-      "foreground": "#d19a66"
-    },
-    "tomlArrayKey": {
-      "foreground": "#e5c07b"
-    },
-    "memberOperatorOverload": {
-      "foreground": "#c678dd"
-    }
-  },
+  "semanticTokenColors": {},
   "tokenColors": [
     {
       "scope": "meta.embedded",

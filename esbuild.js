@@ -2,6 +2,8 @@ const esbuild = require("esbuild");
 
 const production = process.argv.includes('--production');
 const watch = process.argv.includes('--watch');
+const fs = require('fs');
+const { minify } = require('terser');
 
 /**
  * @type {import('esbuild').Plugin}
@@ -37,11 +39,23 @@ async function main() {
 		outfile: 'dist/extension.js',
 		external: ['vscode'],
 		logLevel: 'silent',
+		treeShaking: true,
 		plugins: [
 			/* add to the end of plugins array */
 			esbuildProblemMatcherPlugin,
 		],
 	});
+
+	const esbuildOutput = fs.readFileSync('dist/extension.js', 'utf8');
+
+	const terserOutput = await minify(esbuildOutput, {
+		compress: true,
+		mangle: true,
+	  });
+
+	  fs.writeFileSync('dist/extension.min.js', terserOutput.code);
+	  fs.unlinkSync('dist/extension.js');
+	  console.log('Minification completed');
 	if (watch) {
 		await ctx.watch();
 	} else {

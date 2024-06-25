@@ -1,7 +1,5 @@
 # ✨ Phantom ✨
 
-Phantom is a _smart_, _fast_, _minimal_ and _modern_ theme/extension.
-
 ## Why Phantom?
 
 ### Why theme/extension?

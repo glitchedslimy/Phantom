@@ -19,7 +19,6 @@ export abstract class WebViewController extends Disposable {
     }
 
     async show(): Promise<void> {
-        console.log("Webview started");
         const fullHtml = await this.content;
 
         if(this.panel !== undefined) {

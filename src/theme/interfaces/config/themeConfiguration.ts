@@ -1,5 +1,5 @@
 
 export interface ThemeConfiguration {
-    editorTheme?: string;
+    editorTheme?: {};
     accentColor?: string;
 }

@@ -1,25 +1,33 @@
-async function getLuminance(color: string): Promise<number> {
-    const rgb = color.startsWith("#") ? parseInt(color.slice(1), 16) : parseInt(color, 16);
-    const r = ((rgb >> 16) & 0xff) / 255;
-    const g = ((rgb >> 8) & 0xff) / 255;
-    const b = (rgb & 0xff) / 255;
-    const luminance = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
-    return luminance;
+export async function getLuminance(color: string): Promise<number> {
+    const { r, g, b } = hexToRgb(color);
+    return calculateLuminance({r, g, b});
 }
 
 export async function chooseTextColor(backgroundColor: string): Promise<string> {
     const luminance = await getLuminance(backgroundColor);
-    console.log("Luminance of the color: " + luminance);
     return luminance > 0.5 ? "#000000" : "#ffffff";
 }
 
-export async function lightenColor(hex: string, percent: number): Promise<string> {
-    const num = parseInt(hex.replace("#", ""), 16),
-        amt = Math.round(2.55 * percent),
-        R = (num >> 16) + amt,
-        G = (num >> 8 & 0x00FF) + amt,
-        B = (num & 0x0000FF) + amt,
-        newHex = '#' + (0x1000000 + (R < 255 ? R : 255) * 0x10000 + (G < 255 ? G : 255) * 0x100 + (B < 255 ? B : 255)).toString(16).slice(1);
-
+export async function lightenColor(hex: string, percent: number): Promise<string> { 
+    const { r, g, b } = hexToRgb(hex);
+    const amt = Math.round(2.55 * percent);
+    const newR = Math.min(255, r + amt);
+    const newG = Math.min(255, g + amt);
+    const newB = Math.min(255, b + amt);
+    const newHex = `#${(0x1000000 + newR * 0x10000 + newG * 0x100 + newB).toString(16).slice(1)}`;
     return newHex;
+}
+
+
+function hexToRgb(hex: string): {r: number, g: number, b: number} {
+    const rgb = parseInt(hex.startsWith("#") ? hex.slice(1) : hex, 16);
+    return {
+        r: (rgb >> 16) & 0xff,
+        g: (rgb >> 8) & 0xff,
+        b: rgb & 0xff
+    };
+}
+
+function calculateLuminance({r, g, b}: {r: number, g: number, b: number}): number {
+    return (0.2126 * (r  / 255)) + (0.7152 * (g / 255)) + (0.0722 * (b / 255));
 }

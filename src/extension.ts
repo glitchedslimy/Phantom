@@ -3,6 +3,10 @@ import { ChangelogWebview } from './webviews/Changelog';
 import * as MarkdownIt from 'markdown-it';
 import CheckboxPlugin from './markdown-syntax/checkboxes';
 import { updateTheme } from './theme/updateTheme';
+import EmojiPlugin from './markdown-syntax/emojis';
+import { colorPlugin } from './markdown-syntax/color';
+import { footnotePlugin } from './markdown-syntax/footerNotes';
+import { alertPlugin } from './markdown-syntax/alerts';
 
 export async function activate(context: ExtensionContext) {
 
@@ -22,7 +26,6 @@ export async function activate(context: ExtensionContext) {
 	});
 
 	workspace.onDidChangeConfiguration((e) => {
-		console.log("Detected configuration change");
 		if(e.affectsConfiguration('phantom.accentColor')) {
 			updateTheme();
 		}
@@ -30,7 +33,7 @@ export async function activate(context: ExtensionContext) {
 
 	return {
 		extendMarkdownIt(md: MarkdownIt) {
-			return md.use(CheckboxPlugin);
+			return md.use(CheckboxPlugin).use(EmojiPlugin).use(colorPlugin).use(footnotePlugin).use(alertPlugin);
 		}
 	};
 

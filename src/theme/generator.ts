@@ -1,24 +1,23 @@
 import { workspace } from "vscode";
 import { Theme } from "./theme";
-import colorObjArr from "./interfaces/colorObjArr";
 import themeData from "./themeData";
+import { defaultConfig } from "./interfaces/config/defaultConfig";
+export class ThemeGenerator {
+    private configuration = workspace.getConfiguration("phantom");
+    private themeData = themeData;
 
-export const generateTheme = {
-    default: async function () {
-        return await Theme.init("defaultConfigHere");
-    },
-    fromSettings: async function (themeName?: string) {
-        const configuration = workspace.getConfiguration("phantom");
-        const accentColor = configuration.get("accentColor");
-        const editorTheme = configuration.get("editorTheme") || "defaultTheme";
-        let colorObj = themeData.textColors.classic;
-
-        const buildConfig = {
-            editorTheme: editorTheme,
-            accentColor: accentColor,
-            ...colorObj
-        };
-
-        return await Theme.init(buildConfig);
+    defaultTheme() {
+        return Theme.init(defaultConfig);
     }
-};
+
+    fromSettings() {
+        const accentColor: string | undefined = this.configuration.get<string>("accentColor") ?? defaultConfig.accentColor;
+        const editorTheme: {} | undefined = this.configuration.get<{}>("editorTheme") ?? defaultConfig.editorTheme;
+        let colorObj = this.themeData.textColors.classic;
+        return Theme.init({
+            editorTheme,
+            accentColor,
+            ...colorObj
+        });
+    }
+}

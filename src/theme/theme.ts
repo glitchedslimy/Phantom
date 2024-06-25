@@ -1,6 +1,9 @@
-import { ThemeConfiguration } from '../interfaces/themeConfiguration';
+import { semanticTokenColorMapping } from './data/semanticTokens';
+import { ThemeConfiguration } from './interfaces/config/themeConfiguration';
+import { SemanticTokenColorMapping } from './interfaces/semanticTokens';
 import { TokenColor } from './interfaces/tokenColor';
 import data from './themeData';
+import { assignColorToken } from './utils/assignColorToken';
 import { chooseTextColor, lightenColor } from './utils/luminance';
 
 export class Theme {
@@ -23,7 +26,6 @@ export class Theme {
     }
 
     async applyAccentColor() {
-        console.log(await chooseTextColor(this.accentColor));
         this.colors = {
             ...this.colors,
             'button.background': this.accentColor,
@@ -44,87 +46,59 @@ export class Theme {
         };
     }
 
-    static async init(config: any) {
+    static async init(config: ThemeConfiguration) {
         const themeInstance = new Theme(config);
-        const editorTokens = await this.createEditorTokens(config);
+        const editorTokens = await this.createEditorTokens();
         themeInstance.colors = editorTokens;
         await themeInstance.applyAccentColor();
-        console.log(themeInstance);
         return themeInstance;
     }
 
-    static async createEditorTokens(config: ThemeConfiguration) {
-
-        return config.editorTheme! in data.editorThemes ? (await data.editorThemes["Phantom"]()).default
-            : (await data.editorThemes['Phantom']()).default;
+    static async createEditorTokens() {
+        return (await data.editorThemes["Phantom"]()).default;
     }
 
-    static createTokenColors(config: any) {
-        let result: TokenColor[] = JSON.parse(
-            JSON.stringify(data.tokenColors.default)
-        );
+    static createTokenColors(config: ThemeConfiguration) {
+        let result: TokenColor[] = JSON.parse(JSON.stringify(data.tokenColors.default));
 
-        let colorObj: any = data.textColors.classic;
-        for (let key in colorObj) {
-            if (config[key]) {
-                colorObj[key] = config[key];
-            }
-        }
+        const colorObj: any = {
+            ...data.textColors.classic,
+            ...Object.keys(data.textColors.classic).reduce((acc: any, key: any) => {
+                if (config[key as keyof ThemeConfiguration]) {
+                    acc[key] = config[key as keyof ThemeConfiguration];
+                }
+                return acc; // Ensure accumulator is returned from reduce callback
+            }, {})
+        };
 
         result.forEach((token) => {
-            if (token.settings.foreground) {
-                if (token.settings.foreground in colorObj) {
-                    token.settings.foreground = colorObj[token.settings.foreground];
-                }
+            const { foreground } = token.settings;
+            if (foreground && foreground in colorObj) {
+                token.settings.foreground = colorObj[foreground];
             }
         });
 
         return {
-            semanticTokenColors: {
-                enumMember: {
-                    foreground: colorObj.fountainBlue,
-                },
-                'variable.constant': {
-                    foreground: colorObj.whiskey,
-                },
-                'variable.defaultLibrary': {
-                    foreground: colorObj.chalky,
-                },
-                'variable:dart': {
-                    foreground: colorObj.whiskey,
-                },
-                'property:dart': {
-                    foreground: colorObj.whiskey,
-                },
-                'annotation:dart': {
-                    foreground: colorObj.whiskey,
-                },
-                'parameter.label:dart': {
-                    foreground: colorObj.lightWhite,
-                },
-                macro: {
-                    foreground: colorObj.whiskey,
-                },
-                tomlArrayKey: {
-                    foreground: colorObj.chalky,
-                },
-                "memberOperatorOverload": {
-                    foreground: colorObj.purple,
+            semanticTokenColors: Object.keys(semanticTokenColorMapping).reduce((acc: any, tokenType: string) => {
+                const colorToken = assignColorToken(tokenType, semanticTokenColorMapping[tokenType as keyof SemanticTokenColorMapping], colorObj);
+                if (colorToken && colorObj.hasOwnProperty(colorToken)) {
+                    acc[tokenType] = colorToken;
                 }
-            },
+                return acc;
+            }, {}),
             tokenColors: result,
         };
     }
 
-    async mergeTheme(baseArray: any[], overrides: any[]) {
+    async mergeTheme(baseArray: any[], overrides: any[]): Promise<void> {
         let mergeArray = [...baseArray, ...overrides];
-        let newArr = await this.uniqBy(mergeArray, 'scope');
-        overrides.forEach((item) => {
-            newArr.forEach((cell) => {
-                if (cell.scope === item.scope) {
-                    cell.settings = {
-                        ...cell.settings,
-                        ...item.settings,
+        let uniqueArray = await this.uniqBy(mergeArray, 'scope');
+        overrides.forEach((overrideItem) => {
+            uniqueArray.forEach((uniqueItem) => {
+                if (uniqueItem.scope === overrideItem.scope) {
+                    uniqueItem.settings = {
+                        ...uniqueItem.settings,
+                        ...overrideItem.settings,
                     };
                 }
             });
