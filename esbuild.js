@@ -45,7 +45,12 @@ async function main() {
 			esbuildProblemMatcherPlugin,
 		],
 	});
-
+	if (watch) {
+		await ctx.watch();
+	} else {
+		await ctx.rebuild();
+		await ctx.dispose();
+	}
 	const esbuildOutput = fs.readFileSync('dist/extension.js', 'utf8');
 
 	const terserOutput = await minify(esbuildOutput, {
@@ -55,13 +60,8 @@ async function main() {
 
 	  fs.writeFileSync('dist/extension.min.js', terserOutput.code);
 	  fs.unlinkSync('dist/extension.js');
+	
 	  console.log('Minification completed');
-	if (watch) {
-		await ctx.watch();
-	} else {
-		await ctx.rebuild();
-		await ctx.dispose();
-	}
 }
 
 main().catch(e => {
