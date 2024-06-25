@@ -2,7 +2,6 @@
 
 <center>Phantom is a <i>smart, quick, minimal and modern</i> extension/theme for VSCode.</center>
 
-
 > [!CAUTION]
 > **Phantom** is still in a `experimental` phase. This means is not 100% complete. Should be stable enought to work with, but there are a lot of things missing that are being worked on.
 

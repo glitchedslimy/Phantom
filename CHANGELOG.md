@@ -39,3 +39,24 @@ Nothing has been removed in this version.
 
 ### Changed
 - Color tokenization, it was all white, now it has colors inside the theme.
+
+## [0.1.1]
+
+### Added
+- Minimized code
+
+### Removed
+Nothing has been changed
+
+### Changed
+Nothing has been changed
+
+## [0.1.2]
+### Added
+- Tried to fix GFM not working in extension.
+
+### Removed
+Nothing has been changed
+
+### Changed
+Nothing has been changed

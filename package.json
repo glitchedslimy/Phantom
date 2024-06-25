@@ -2,7 +2,7 @@
   "name": "phantom-theme-official",
   "displayName": "Phantom",
   "description": "Official Phantom Theme for VSCode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "Slimy",
   "engines": {
     "vscode": "^1.90.0"
@@ -20,11 +20,10 @@
   ],
   "activationEvents": [
     "onStartupFinished",
-    "onLanguage:markdown"
-  ],
-  "extensionKind": [
-    "ui",
-    "workspace"
+    "onLanguage:markdown",
+    "onLanguage:rmd",
+    "onLanguage:quarto",
+    "workspaceContains:README.md"
   ],
   "main": "./dist/extension.min.js",
   "contributes": {
