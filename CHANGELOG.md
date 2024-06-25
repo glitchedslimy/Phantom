@@ -29,7 +29,7 @@ Nothing has been removed in this version.
 ### Changed
 - Structure of functions and code due to a refactor to improve readability and performance.
 
-## [0.1.1-beta]
+## [0.1.0]
 
 ### Added
 - Github Flavoured Markdown support out of the box.
