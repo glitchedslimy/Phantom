@@ -1,7 +1,7 @@
 name: Feature Request
 description: I have a suggestion for a new feature.
 title: "[Feat]: "
-labels: ["feat", "request"]
+labels: ["enhancement", "request"]
 assignees:
   - glitchedslimy
 body:
